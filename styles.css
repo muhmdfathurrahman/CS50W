@@ -27,7 +27,7 @@ header {
             cursor: pointer; }
 
 footer {
-    font-size: 15px;;
+    font-size: 15px;
     background-color: #f2f2f2;
     border-top: 1px solid #dadce0;
     color: #70757a;
@@ -266,9 +266,9 @@ span.google-logo {
     color: #5f6368 }
     #apps { margin: 15px; }
     #apps:hover {
-        background-color: #9aa0a625;
+        background-color: #e3e5e7;
         margin: 10px;
-        border: 5px solid #9aa0a625;
+        border: 5px solid #e3e5e7;
         border-radius: 50%; }
 
 #search-logo, #search-mic, #search-camera {font-size: 20px;}
