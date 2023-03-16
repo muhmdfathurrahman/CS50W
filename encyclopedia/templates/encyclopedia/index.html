@@ -7,7 +7,7 @@
 {% block body %}
     <h1>All Pages</h1>
 
-    <ul>
+    <ul class="wiki-list">
         {% for entry in entries %}
             <li><a href="{% url 'page' title=entry %}">{{ entry }}</a></li>
         {% endfor %}

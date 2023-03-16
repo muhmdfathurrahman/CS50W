@@ -11,7 +11,7 @@
     <body>
         <div class="row" style="margin-left: 0; margin-right: 0;">
             <div class="sidebar col-lg-2 col-md-3">
-                <h2>Wiki</h2>
+                <a class="logo" href="{% url 'index' %}"><h2>Wiki</h2></a>
                 <form action="{% url 'search' %}">
                     <div class="input-group mb-2">
                         <input class="form-control" type="text" name="q" placeholder="Search Encyclopedia" autocomplete="off" value="{% block sq %}{% endblock %}">

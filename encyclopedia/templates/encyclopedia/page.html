@@ -19,6 +19,6 @@
         </div>
         {{ page |safe }}
     {% else %}
-        {{ title }} page is not available. <a href="{% url 'new-page' title=title %}">Click here</a> to make a new page
+        Unfortunately {{ title }} page is yet not available. <a href="{% url 'new-page' title=title %}">Click here</a> to make a new page
     {% endif %}
 {% endblock %}

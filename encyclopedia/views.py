@@ -54,7 +54,8 @@ def page(request, title):
     FORMAT_CHECK = format_checker(title, "page")
     if not format_checker(title, "page"):
         entry = util.get_entry(title)
-        entry["first_line"] = markdown(entry["body"].split('\n')[0])
+        entry["first_line"] = (markdown(entry["body"].split('\n')[0])
+                               if (entry["body"] is not None) else None)
         entry["body"] = (markdown('\n'.join(entry["body"].split('\n')[1:])) 
                          if (entry["body"] is not None) else None)
         return render(request, "encyclopedia/page.html", {
@@ -72,19 +73,22 @@ def random_page(request):
     }))
 
 
-def edit_page(request, title):
+def edit_page(request, title=None):
     if request.method == "POST":
         form = editorForm(request.POST)
         if form.is_valid():
             util.save_entry(form.data['title'], form.data['body'])
             return HttpResponseRedirect(reverse("page", kwargs={
-                "title": title
+                "title": form.data['title']
             })) 
         else:
             return render(request, "encyclopedia/editor.html", {
                 "form": form,
-                "title": title
+                "title": title,
+                "type": "Edit"
             })
+    if title is None:
+        return HttpResponseRedirect(reverse("new-page"))
     FORMAT_CHECK = format_checker(title, "edit-page")
     if not FORMAT_CHECK:
         body = util.get_entry(title)["body"]
@@ -97,7 +101,8 @@ def edit_page(request, title):
         form.body = form.body.render("body", body)
         return render(request, "encyclopedia/editor.html", {
             "form": form,
-            "title": title
+            "title": title,
+            "type": "Edit"
         })
     return FORMAT_CHECK
 
@@ -127,7 +132,8 @@ def new_page(request, title=None):
     form.body = form.body.render("body", body)
     return render(request, "encyclopedia/editor.html", {
         "form": form,
-        "title": title
+        "title": title,
+        "type": "New Page"
     })
 
 

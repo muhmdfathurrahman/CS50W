@@ -52,7 +52,7 @@ h1 {
     font-weight: bold;
 }
 
-ul {
+ul.wiki-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -64,4 +64,12 @@ ul {
 
 textarea {
     height: calc(100vh - 74px);
+}
+
+a.logo {
+    all:unset;
+}
+
+a.logo:hover {
+    cursor: pointer;
 }

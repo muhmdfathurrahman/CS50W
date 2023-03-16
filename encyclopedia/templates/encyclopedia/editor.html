@@ -1,11 +1,11 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Edit {{ title }} - Encyclopedia
+    {{ type }} {% if title %}-{% endif %} {{ title }} - Encyclopedia
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'edit-page' title=title%}" method="POST">
+    <form action="{% url 'edit-page' %}" method="POST">
         {% csrf_token %}
         <div class="bold-all-child input-group mb-3">
             <span class="input-group-text">Document Title: </span>
