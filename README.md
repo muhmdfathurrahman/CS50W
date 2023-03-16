@@ -9,4 +9,4 @@ Run this repository in a server such as `npx http-server` in your terminal after
 ### 1/wiki branch: Wikipedia Imitation Project
 visit branch by commanding `git checkout 1/wiki` in the terminal. <br>
 A Wikipedia-like online encyclopedia. Built using Django Framework. <br>
-Run this repository with the command 'python manage.py runserver' or as the run command built by Django after **cloning the repository**.
+Run this repository with the command `python manage.py runserver` or as the run command built by Django after **cloning the repository**.
