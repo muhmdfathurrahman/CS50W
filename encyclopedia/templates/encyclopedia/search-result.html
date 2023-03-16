@@ -1,0 +1,23 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% block sq %}{{ query }}{% endblock%} - Search Result - Encyclopedia
+{% endblock %}
+
+
+{% block body %}
+    {% if possible_entries %}
+        <h1>Search results for <u>{{ query }}</u></h1>
+
+        {# Displays a list of all encyclopedia entries #}
+        {# that have the query as a substring #}
+        <ul>
+            {% for entry in possible_entries %}
+                <li><a href="{% url 'page' title=entry %}">{{ entry }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Unfortunately there are no search results found for <u>{{ query }}</u></h1>
+    {% endif %}
+        
+{% endblock %}

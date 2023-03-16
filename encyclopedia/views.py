@@ -54,10 +54,12 @@ def page(request, title):
     FORMAT_CHECK = format_checker(title, "page")
     if not format_checker(title, "page"):
         entry = util.get_entry(title)
+        entry["first_line"] = markdown(entry["body"].split('\n')[0])
         entry["body"] = (markdown('\n'.join(entry["body"].split('\n')[1:])) 
                          if (entry["body"] is not None) else None)
         return render(request, "encyclopedia/page.html", {
             "title": entry["title"],
+            "first_line": entry["first_line"],
             "page": entry["body"]
         })
     return FORMAT_CHECK
@@ -81,7 +83,7 @@ def edit_page(request, title):
         else:
             return render(request, "encyclopedia/editor.html", {
                 "form": form,
-                "action": "/edit/" + title
+                "title": title
             })
     FORMAT_CHECK = format_checker(title, "edit-page")
     if not FORMAT_CHECK:
@@ -95,7 +97,7 @@ def edit_page(request, title):
         form.body = form.body.render("body", body)
         return render(request, "encyclopedia/editor.html", {
             "form": form,
-            "action": "/edit/" + title
+            "title": title
         })
     return FORMAT_CHECK
 
@@ -125,5 +127,21 @@ def new_page(request, title=None):
     form.body = form.body.render("body", body)
     return render(request, "encyclopedia/editor.html", {
         "form": form,
-        "action": "/edit/" + title
+        "title": title
+    })
+
+
+def search(request):
+    query = request.GET["q"]
+    possible_entries = []
+    for file in util.list_entries():
+        if query.lower() == file.lower():
+            return HttpResponseRedirect(reverse("page", kwargs={
+                "title": query
+            }))
+        elif query.lower() in file.lower():
+            possible_entries.append(file)
+    return render(request, "encyclopedia/search-result.html", {
+        "query": query,
+        "possible_entries": possible_entries
     })
