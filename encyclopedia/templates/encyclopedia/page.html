@@ -8,7 +8,7 @@
     <!-- Here goes the page -->
     {% if page is not None %}
         <div class="d-flex">
-            <h1>{{ first_line|safe }}</h1>
+            {{ first_line|safe }}
             <a href="{% url 'edit-page' title=title %}" class="ms-auto">
                 edit
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -19,6 +19,6 @@
         </div>
         {{ page |safe }}
     {% else %}
-        Unfortunately {{ title }} page is yet not available. <a href="{% url 'new-page' title=title %}">Click here</a> to make a new page
+        Unfortunately <u>{{ title }}</u> page is yet not available. <a href="{% url 'new-page' title=title %}">Click here</a> to make a new page
     {% endif %}
 {% endblock %}

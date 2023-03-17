@@ -14,9 +14,16 @@
         background: transparent;
     }
 
-    ::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder {
+    ::placeholder {
         color: #F0F0F0 !important;
-        opacity: 1;
+    }
+
+    ::-ms-input-placeholder {
+        color: #F0F0F0 !important;
+    }
+
+    :-ms-input-placeholder {
+        color: #F0F0F0 !important;
     }
 }
 

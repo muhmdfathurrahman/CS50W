@@ -1,3 +1,1 @@
-# Wiki
-
-Wiki is alike Wikipedia.
+a

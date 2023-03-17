@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect # For testing purposes
+from django.core.exceptions import ValidationError
 from django import forms
 
 from . import util
@@ -11,18 +12,18 @@ from random import randint
 
 
 class editorForm(forms.Form):
-    title = forms.TextInput(attrs={
+    title = forms.CharField(widget=forms.TextInput(attrs={
         "class": "form-control"
-    })
-    body = forms.Textarea(attrs={
+    }))
+    body = forms.CharField(widget=forms.Textarea(attrs={
         "class": "form-control"
-    })
+    }))
 
-
-def index(request):
-    return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
-    })
+    def titleIsAvailable(self):
+        title = self.data['title']
+        for file_name in util.list_entries():
+            if title == file_name:
+                self.add_error('title', f'Encyclopedia entry with {title} title is already existed')
 
 
 def format_checker(title, current_page):
@@ -50,6 +51,12 @@ def format_checker(title, current_page):
     return False
     
 
+def index(request):
+    return render(request, "encyclopedia/index.html", {
+        "entries": util.list_entries()
+    })
+
+
 def page(request, title):
     FORMAT_CHECK = format_checker(title, "page")
     if not format_checker(title, "page"):
@@ -73,7 +80,8 @@ def random_page(request):
     }))
 
 
-def edit_page(request, title=None):
+def edit_page(request, title):
+    # User accessing route via POST
     if request.method == "POST":
         form = editorForm(request.POST)
         if form.is_valid():
@@ -87,18 +95,23 @@ def edit_page(request, title=None):
                 "title": title,
                 "type": "Edit"
             })
-    if title is None:
-        return HttpResponseRedirect(reverse("new-page"))
+        
+    # User accessing route via GET
     FORMAT_CHECK = format_checker(title, "edit-page")
     if not FORMAT_CHECK:
         body = util.get_entry(title)["body"]
+
+        # Redirect to page if there is no page to edit to tell that
+        # page doesn't exist
         if body is None:
             return HttpResponseRedirect(reverse("page", kwargs={
                 "title": title
             }))
-        form = editorForm()
-        form.title = form.title.render("title", title)
-        form.body = form.body.render("body", body)
+        
+        form = editorForm({
+            "title": title,
+            "body": body
+        })
         return render(request, "encyclopedia/editor.html", {
             "form": form,
             "title": title,
@@ -108,7 +121,19 @@ def edit_page(request, title=None):
 
 
 def new_page(request, title=None):
-    form = editorForm()
+    if request.method == "POST":
+        form = editorForm(request.POST)
+        if form.is_valid() and form.titleIsAvailable():
+            util.save_entry(form.data['title'], form.data['body'])
+            return HttpResponseRedirect(reverse("page", kwargs={
+                "title": form.data['title']
+            })) 
+        else:
+            return render(request, "encyclopedia/editor.html", {
+                "form": form,
+                "title": title,
+                "type": "New Page"
+            })
     if title is not None:
         # Lesser format check that only be used in this particular
         # Function
@@ -116,20 +141,18 @@ def new_page(request, title=None):
             return HttpResponseRedirect(reverse("new-page", kwargs={
                 "title": title.capitalize()
             }))
+        # Redirect to edit page if page already exists
         if util.get_entry(title)["body"]:
             return HttpResponseRedirect(reverse("edit-page", kwargs={
                 "title": title
             }))
         body = f"# {title}\r\n\r\n"
-        form.title.attrs["autofocus"] = False
-        form.body.attrs["autofocus"] = True
+        form = editorForm({
+            "title": title,
+            "body": body
+        })
     else:
-        title = ""
-        body = ""
-        form.title.attrs["autofocus"] = True
-        form.body.attrs["autofocus"] = False
-    form.title = form.title.render("title", title)
-    form.body = form.body.render("body", body)
+        form = editorForm()
     return render(request, "encyclopedia/editor.html", {
         "form": form,
         "title": title,
@@ -138,6 +161,8 @@ def new_page(request, title=None):
 
 
 def search(request):
+    if "q" not in request.GET.keys():
+        return HttpResponseRedirect(reverse("index"))
     query = request.GET["q"]
     possible_entries = []
     for file in util.list_entries():
