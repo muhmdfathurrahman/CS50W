@@ -1,6 +1,7 @@
 # 🔍 CS50W/0/search
 A CS50W project. Front-end design for Google Search, Google Images, and Google Advanced Search
 Run this project in a server such as `npx http-server` in your terminal after **cloning the repository**.
+<br>[Link to project](https://cs50.harvard.edu/web/2020/projects/0/search)
 
 ### Here are the steps and command to write in the terminal in order to see the projects:
 1. Clone the projects to your computer `git clone https://github.com/muhmdfathurrahman/CS50W.git`
