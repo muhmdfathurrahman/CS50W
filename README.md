@@ -1,6 +1,6 @@
 # CS50W Projects
-This is a repository to documentate my CS50W projects. Each project is stored in a branch
-soo without furthur a do let's dive in my projects!
+This is a repository to documentate my [CS50W class](https://cs50.harvard.edu/web/2020) projects. Each project is stored in a branch.<br>
+**SOO!** without further a do let's dive in my projects!
 
 ### Here are the links:
 1. [🔍 0/search](https://github.com/muhmdfathurrahman/CS50W/tree/0/search)
