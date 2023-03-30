@@ -9,3 +9,4 @@ Run this repository with the command `python manage.py runserver` or as the run 
 4. Run the server `python manage.py runserver`
 
 [Back to mainpage ↩️](https://github.com/muhmdfathurrahman/CS50W/)
+<br>[Link to project assignment 🧑‍🏫](https://cs50.harvard.edu/web/2020/projects/1/wiki)
