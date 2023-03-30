@@ -8,3 +8,4 @@ Run this repository with the command `python manage.py runserver` or as the run 
 3. Checkout to 0/search repository `git checkout 1/wiki`
 4. Run the server `python manage.py runserver`
 
+[Back to main](https://github.com/muhmdfathurrahman/CS50W/)
