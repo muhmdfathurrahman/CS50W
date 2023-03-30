@@ -9,4 +9,4 @@ Run this project in a server such as `npx http-server` in your terminal after **
 4. Launch using a server (for instance `npx`) `npx http-server`
 
 [Back to mainpage ↩️](https://github.com/muhmdfathurrahman/CS50W/)
-<br>[Link to project assignment](https://cs50.harvard.edu/web/2020/projects/0/search)
+<br>[Link to project assignment 🧑‍🏫](https://cs50.harvard.edu/web/2020/projects/0/search)
