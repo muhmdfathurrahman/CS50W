@@ -7,3 +7,5 @@ Run this project in a server such as `npx http-server` in your terminal after **
 2. Go to the directory `cd CS50W`
 3. Checkout to 0/search repository `git checkout 0/search`
 4. Launch using a server (for instance `npx`) `npx http-server`
+
+[Back to main](https://github.com/muhmdfathurrahman/CS50W/)
