@@ -24,6 +24,8 @@ class editorForm(forms.Form):
         for file_name in util.list_entries():
             if title == file_name:
                 self.add_error('title', f'Encyclopedia entry with {title} title is already existed')
+                return False
+        return True
 
 
 def format_checker(title, current_page):
@@ -124,9 +126,10 @@ def new_page(request, title=None):
     if request.method == "POST":
         form = editorForm(request.POST)
         if form.is_valid() and form.titleIsAvailable():
-            util.save_entry(form.data['title'], form.data['body'])
+            cd = form.cleaned_data
+            util.save_entry(cd['title'], cd['body'])
             return HttpResponseRedirect(reverse("page", kwargs={
-                "title": form.data['title']
+                "title": cd['title']
             })) 
         else:
             return render(request, "encyclopedia/editor.html", {

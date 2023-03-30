@@ -14,7 +14,7 @@
                 {{ error }}
             {% endif %}
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="submit" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}{% endfor %}{% endif %}
     <form action="{% if type == 'Edit' %}{% url 'edit-page' title=title %}{% else %}{% url 'new-page' %}{% endif %}" method="POST">
